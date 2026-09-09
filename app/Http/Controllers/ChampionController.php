@@ -97,4 +97,18 @@ class ChampionController extends Controller
             ->route('champions.show', $champion)
             ->with('success', "¡El campeón {$champion->name} ({$champion->title}) ha sido actualizado con éxito!");
     }
+
+    /**
+     * Elimina un campeón de la base de datos de manera definitiva.
+     */
+    public function destroy(Champion $champion): RedirectResponse
+    {
+        $name = $champion->name;
+        $title = $champion->title;
+        $champion->delete();
+
+        return redirect()
+            ->route('champions.index')
+            ->with('success', "¡El campeón {$name} ({$title}) ha sido eliminado de la Grieta del Invocador exitosamente!");
+    }
 }

@@ -186,14 +186,46 @@
                             <span class="font-semibold"><i class="fa-solid fa-pen-to-square mr-1.5 text-[#c89b3c]"></i> Editar Atributos</span>
                             <i class="fa-solid fa-chevron-right text-[10px] text-[#c89b3c]"></i>
                         </a>
-                        <button type="button" disabled title="Disponible en Fase 4"
-                            class="w-full bg-[#010a13] border border-[#1e282d] text-gray-500 py-2 px-3 rounded text-xs flex items-center justify-between cursor-not-allowed opacity-75">
-                            <span><i class="fa-solid fa-trash mr-1.5 text-gray-500"></i> Eliminar Campeón</span>
-                            <span class="bg-[#1e282d] px-1.5 py-0.5 rounded text-[10px] text-gray-400">Fase 4</span>
+                        <button type="button" onclick="document.getElementById('delete-modal').classList.remove('hidden')"
+                            class="w-full bg-[#010a13] hover:bg-rose-950/40 border border-red-900/50 hover:border-red-600 text-rose-300 hover:text-white py-2.5 px-3 rounded text-xs flex items-center justify-between transition shadow">
+                            <span class="font-semibold"><i class="fa-solid fa-trash mr-1.5 text-rose-500"></i> Eliminar Campeón</span>
+                            <i class="fa-solid fa-triangle-exclamation text-[10px] text-rose-500"></i>
                         </button>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- Modal de Confirmación de Eliminación -->
+    <div id="delete-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+        <div class="bg-[#091428] border-2 border-red-600/70 rounded-xl max-w-md w-full p-6 shadow-2xl relative">
+            <div class="flex items-center space-x-3 mb-4 text-red-400">
+                <div class="w-12 h-12 rounded-full bg-red-950/60 border border-red-600 flex items-center justify-center">
+                    <i class="fa-solid fa-triangle-exclamation text-xl"></i>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold text-[#f0e6d2]">¿Desterrar a {{ $champion->name }}?</h3>
+                    <p class="text-xs text-red-400">Acción destructiva irreversible</p>
+                </div>
+            </div>
+
+            <p class="text-sm text-gray-300 mb-6 leading-relaxed">
+                ¿Estás seguro de que deseas eliminar a <strong class="text-[#c89b3c]">{{ $champion->name }}</strong> (<span class="italic text-gray-400">{{ $champion->title }}</span>) de la Grieta del Invocador? Se perderán todos sus atributos y registros asociados.
+            </p>
+
+            <form action="{{ route('champions.destroy', $champion) }}" method="POST" class="flex items-center justify-end space-x-3">
+                @csrf
+                @method('DELETE')
+                <button type="button" onclick="document.getElementById('delete-modal').classList.add('hidden')"
+                    class="px-4 py-2 bg-[#1e282d] hover:bg-gray-700 text-gray-300 hover:text-white rounded text-xs font-semibold transition">
+                    Cancelar
+                </button>
+                <button type="submit"
+                    class="px-5 py-2 bg-gradient-to-r from-red-700 to-red-900 hover:from-red-600 hover:to-red-800 text-white rounded text-xs font-bold tracking-wider shadow-lg flex items-center transition">
+                    <i class="fa-solid fa-trash-can mr-1.5"></i> Confirmar Eliminación
+                </button>
+            </form>
         </div>
     </div>
 </div>
