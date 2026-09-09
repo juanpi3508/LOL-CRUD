@@ -14,6 +14,6 @@ class ExampleTest extends TestCase
     {
         $response = $this->get('/');
 
-        $response->assertRedirect(route('champions.create'));
+        $response->assertRedirect(route('champions.index'));
     }
 }
