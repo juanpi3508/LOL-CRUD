@@ -173,11 +173,19 @@
                             </p>
                         </div>
 
-                        <!-- Botón Ver Detalles -->
+                        <!-- Botón Ver Detalles y Acciones Rápidas -->
                         <div class="pt-3 border-t border-[#1e282d] flex items-center justify-between">
-                            <span class="text-[11px] text-gray-500">
-                                ID: #{{ $champion->id }}
-                            </span>
+                            <div class="flex items-center space-x-1">
+                                <a href="{{ route('champions.edit', $champion) }}" title="Editar campeón"
+                                    class="text-gray-400 hover:text-[#c89b3c] p-1.5 rounded hover:bg-[#010a13] transition text-xs">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </a>
+                                <button type="button" title="Eliminar campeón"
+                                    onclick="abrirModalEliminar('{{ route('champions.destroy', $champion) }}', '{{ $champion->name }}', '{{ $champion->title }}')"
+                                    class="text-gray-400 hover:text-red-400 p-1.5 rounded hover:bg-[#010a13] transition text-xs">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </div>
                             <a href="{{ route('champions.show', $champion) }}"
                                 class="text-xs font-semibold text-[#c89b3c] hover:text-[#f0e6d2] flex items-center group-hover:translate-x-1 transition-transform">
                                 Ver Ficha Completa <i class="fa-solid fa-arrow-right ml-1.5 text-[10px]"></i>
@@ -195,5 +203,48 @@
             </div>
         @endif
     @endif
+
+    <!-- Modal Reutilizable de Confirmación de Eliminación -->
+    <div id="delete-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+        <div class="bg-[#091428] border-2 border-red-600/70 rounded-xl max-w-md w-full p-6 shadow-2xl relative">
+            <div class="flex items-center space-x-3 mb-4 text-red-400">
+                <div class="w-12 h-12 rounded-full bg-red-950/60 border border-red-600 flex items-center justify-center">
+                    <i class="fa-solid fa-triangle-exclamation text-xl"></i>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold text-[#f0e6d2]">¿Eliminar Campeón?</h3>
+                    <p class="text-xs text-red-400">Acción destructiva irreversible</p>
+                </div>
+            </div>
+
+            <p class="text-sm text-gray-300 mb-6 leading-relaxed">
+                ¿Estás seguro de que deseas eliminar a <strong id="delete-champion-name" class="text-[#c89b3c]"></strong> (<span id="delete-champion-title" class="italic text-gray-400"></span>) del catálogo?
+            </p>
+
+            <form id="delete-form" action="" method="POST" class="flex items-center justify-end space-x-3">
+                @csrf
+                @method('DELETE')
+                <button type="button" onclick="document.getElementById('delete-modal').classList.add('hidden')"
+                    class="px-4 py-2 bg-[#1e282d] hover:bg-gray-700 text-gray-300 hover:text-white rounded text-xs font-semibold transition">
+                    Cancelar
+                </button>
+                <button type="submit"
+                    class="px-5 py-2 bg-gradient-to-r from-red-700 to-red-900 hover:from-red-600 hover:to-red-800 text-white rounded text-xs font-bold tracking-wider shadow-lg flex items-center transition">
+                    <i class="fa-solid fa-trash-can mr-1.5"></i> Confirmar Eliminación
+                </button>
+            </form>
+        </div>
+    </div>
 </div>
+@endsection
+
+@section('scripts')
+<script>
+    function abrirModalEliminar(actionUrl, name, title) {
+        document.getElementById('delete-form').action = actionUrl;
+        document.getElementById('delete-champion-name').textContent = name;
+        document.getElementById('delete-champion-title').textContent = title;
+        document.getElementById('delete-modal').classList.remove('hidden');
+    }
+</script>
 @endsection
