@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreChampionRequest;
+use App\Http\Requests\UpdateChampionRequest;
 use App\Models\Champion;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -71,5 +72,29 @@ class ChampionController extends Controller
     public function show(Champion $champion): View
     {
         return view('champions.show', compact('champion'));
+    }
+
+    /**
+     * Muestra el formulario para editar los atributos de un campeón.
+     */
+    public function edit(Champion $champion): View
+    {
+        $roles = Champion::ROLES;
+        $difficulties = Champion::DIFFICULTIES;
+        $resourceTypes = Champion::RESOURCE_TYPES;
+
+        return view('champions.edit', compact('champion', 'roles', 'difficulties', 'resourceTypes'));
+    }
+
+    /**
+     * Actualiza los datos de un campeón en la base de datos.
+     */
+    public function update(UpdateChampionRequest $request, Champion $champion): RedirectResponse
+    {
+        $champion->update($request->validated());
+
+        return redirect()
+            ->route('champions.show', $champion)
+            ->with('success', "¡El campeón {$champion->name} ({$champion->title}) ha sido actualizado con éxito!");
     }
 }

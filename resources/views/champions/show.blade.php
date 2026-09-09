@@ -14,6 +14,9 @@
             <span class="text-[#c89b3c] font-semibold">{{ $champion->name }}</span>
         </div>
         <div class="flex items-center space-x-3">
+            <a href="{{ route('champions.edit', $champion) }}" class="bg-[#1e282d] hover:bg-[#785a28] text-gray-200 hover:text-white px-3 py-1.5 rounded text-xs font-semibold flex items-center shadow transition">
+                <i class="fa-solid fa-pen-to-square mr-1.5 text-[#c89b3c]"></i> Editar Campeón
+            </a>
             <a href="{{ route('champions.create') }}" class="hextech-btn px-3 py-1.5 rounded text-xs font-semibold flex items-center shadow">
                 <i class="fa-solid fa-plus mr-1.5 text-[#c89b3c]"></i> Nuevo Campeón
             </a>
@@ -176,14 +179,13 @@
                         <i class="fa-solid fa-plus mr-2 text-[#c89b3c]"></i> Invocar Otro Campeón
                     </a>
 
-                    <!-- Acciones de Fases Próximas (Fase 3 y Fase 4) -->
+                    <!-- Acciones de Gestión -->
                     <div class="pt-4 mt-4 border-t border-[#1e282d] space-y-2">
-                        <span class="text-[11px] text-gray-500 uppercase tracking-widest block font-semibold mb-2">Próximas Fases del CRUD:</span>
-                        <button type="button" disabled title="Disponible en Fase 3"
-                            class="w-full bg-[#010a13] border border-[#1e282d] text-gray-500 py-2 px-3 rounded text-xs flex items-center justify-between cursor-not-allowed opacity-75">
-                            <span><i class="fa-solid fa-pen-to-square mr-1.5 text-gray-500"></i> Editar Atributos</span>
-                            <span class="bg-[#1e282d] px-1.5 py-0.5 rounded text-[10px] text-gray-400">Fase 3</span>
-                        </button>
+                        <a href="{{ route('champions.edit', $champion) }}"
+                            class="w-full bg-[#010a13] hover:bg-[#1e282d] border border-[#c89b3c]/50 hover:border-[#c89b3c] text-gray-200 py-2.5 px-3 rounded text-xs flex items-center justify-between transition shadow">
+                            <span class="font-semibold"><i class="fa-solid fa-pen-to-square mr-1.5 text-[#c89b3c]"></i> Editar Atributos</span>
+                            <i class="fa-solid fa-chevron-right text-[10px] text-[#c89b3c]"></i>
+                        </a>
                         <button type="button" disabled title="Disponible en Fase 4"
                             class="w-full bg-[#010a13] border border-[#1e282d] text-gray-500 py-2 px-3 rounded text-xs flex items-center justify-between cursor-not-allowed opacity-75">
                             <span><i class="fa-solid fa-trash mr-1.5 text-gray-500"></i> Eliminar Campeón</span>
