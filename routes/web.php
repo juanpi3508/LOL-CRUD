@@ -24,3 +24,6 @@ Route::delete('/skins/{skin}', [SkinController::class, 'destroy'])->name('skins.
 // Rutas de Habilidades / Abilities
 Route::post('/champions/{champion}/abilities', [AbilityController::class, 'store'])->name('champions.abilities.store');
 Route::delete('/abilities/{ability}', [AbilityController::class, 'destroy'])->name('abilities.destroy');
+
+// Sincronización con Riot Data Dragon
+Route::post('/champions/{champion}/sync', [ChampionController::class, 'sync'])->name('champions.sync');
