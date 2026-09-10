@@ -14,6 +14,14 @@
             <span class="text-[#c89b3c] font-semibold">{{ $champion->name }}</span>
         </div>
         <div class="flex items-center space-x-3">
+            <form action="{{ route('champions.sync', $champion) }}" method="POST" class="inline">
+                @csrf
+                <button type="submit"
+                    class="bg-[#0ac8b9]/20 hover:bg-[#0ac8b9]/30 text-[#0ac8b9] border border-[#0ac8b9]/60 px-3 py-1.5 rounded text-xs font-semibold flex items-center shadow transition hover:scale-105"
+                    title="Cargar automáticamente skins y habilidades oficiales desde Riot Games">
+                    <i class="fa-solid fa-arrows-rotate mr-1.5 text-xs"></i> Sincronizar con Riot
+                </button>
+            </form>
             <button type="button" onclick="document.getElementById('add-ability-modal').classList.remove('hidden')"
                 class="bg-[#c89b3c]/20 hover:bg-[#c89b3c]/30 text-[#c89b3c] border border-[#c89b3c]/60 px-3 py-1.5 rounded text-xs font-semibold flex items-center shadow transition">
                 <i class="fa-solid fa-bolt-lightning mr-1.5 text-xs"></i> Forjar Habilidad
@@ -471,6 +479,14 @@
                         class="w-full bg-gradient-to-r from-[#0ac8b9]/20 to-[#0ac8b9]/10 hover:from-[#0ac8b9]/30 hover:to-[#0ac8b9]/20 border border-[#0ac8b9]/70 text-[#0ac8b9] py-2.5 px-4 rounded text-sm font-semibold flex items-center justify-center transition shadow">
                         <i class="fa-solid fa-wand-magic-sparkles mr-2"></i> Invocar Nuevo Aspecto
                     </button>
+
+                    <form action="{{ route('champions.sync', $champion) }}" method="POST">
+                        @csrf
+                        <button type="submit"
+                            class="w-full bg-[#010a13] hover:bg-[#1e282d] border border-[#0ac8b9]/60 hover:border-[#0ac8b9] text-[#0ac8b9] hover:text-white py-2.5 px-4 rounded text-sm font-semibold flex items-center justify-center transition shadow group">
+                            <i class="fa-solid fa-arrows-rotate mr-2 group-hover:rotate-180 transition-transform duration-500 text-[#0ac8b9]"></i> Sincronizar con Riot Games
+                        </button>
+                    </form>
 
                     <a href="{{ route('champions.index') }}" class="w-full bg-[#1e282d] hover:bg-[#785a28] text-gray-200 hover:text-white py-2.5 px-4 rounded text-sm font-semibold flex items-center justify-center transition shadow">
                         <i class="fa-solid fa-list mr-2 text-[#c89b3c]"></i> Volver al Catálogo
