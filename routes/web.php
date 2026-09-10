@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ChampionController;
+use App\Http\Controllers\SkinController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -15,3 +16,6 @@ Route::get('/champions/{champion}/edit', [ChampionController::class, 'edit'])->n
 Route::put('/champions/{champion}', [ChampionController::class, 'update'])->name('champions.update');
 Route::delete('/champions/{champion}', [ChampionController::class, 'destroy'])->name('champions.destroy');
 
+// Rutas de Aspectos / Skins
+Route::post('/champions/{champion}/skins', [SkinController::class, 'store'])->name('champions.skins.store');
+Route::delete('/skins/{skin}', [SkinController::class, 'destroy'])->name('skins.destroy');

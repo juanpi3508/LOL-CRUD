@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreChampionRequest;
 use App\Http\Requests\UpdateChampionRequest;
 use App\Models\Champion;
+use App\Models\Skin;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -67,11 +68,14 @@ class ChampionController extends Controller
     }
 
     /**
-     * Muestra la ficha detallada de un campeón específico.
+     * Muestra la ficha detallada de un campeón específico con sus aspectos cargados.
      */
     public function show(Champion $champion): View
     {
-        return view('champions.show', compact('champion'));
+        $champion->load('skins');
+        $skinTiers = Skin::TIERS;
+
+        return view('champions.show', compact('champion', 'skinTiers'));
     }
 
     /**
