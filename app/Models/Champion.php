@@ -42,4 +42,12 @@ class Champion extends Model
     {
         return $this->hasMany(Skin::class);
     }
+
+    /**
+     * Habilidades activas y pasivas de este campeón.
+     */
+    public function abilities(): HasMany
+    {
+        return $this->hasMany(Ability::class);
+    }
 }

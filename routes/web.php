@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AbilityController;
 use App\Http\Controllers\ChampionController;
 use App\Http\Controllers\SkinController;
 use Illuminate\Support\Facades\Route;
@@ -19,3 +20,10 @@ Route::delete('/champions/{champion}', [ChampionController::class, 'destroy'])->
 // Rutas de Aspectos / Skins
 Route::post('/champions/{champion}/skins', [SkinController::class, 'store'])->name('champions.skins.store');
 Route::delete('/skins/{skin}', [SkinController::class, 'destroy'])->name('skins.destroy');
+
+// Rutas de Habilidades / Abilities
+Route::post('/champions/{champion}/abilities', [AbilityController::class, 'store'])->name('champions.abilities.store');
+Route::delete('/abilities/{ability}', [AbilityController::class, 'destroy'])->name('abilities.destroy');
+
+// Sincronización con Riot Data Dragon
+Route::post('/champions/{champion}/sync', [ChampionController::class, 'sync'])->name('champions.sync');

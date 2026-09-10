@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreChampionRequest;
 use App\Http\Requests\UpdateChampionRequest;
+use App\Models\Ability;
 use App\Models\Champion;
 use App\Models\Skin;
+use App\Services\RiotDataDragonService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -68,14 +70,39 @@ class ChampionController extends Controller
     }
 
     /**
-     * Muestra la ficha detallada de un campeón específico con sus aspectos cargados.
+     * Muestra la ficha detallada de un campeón específico con sus aspectos y habilidades cargados.
+     * Si no tiene datos asociados, se auto-sincronizan desde Riot Data Dragon de forma transparente.
      */
-    public function show(Champion $champion): View
+    public function show(Champion $champion, RiotDataDragonService $riotService): View
     {
-        $champion->load('skins');
-        $skinTiers = Skin::TIERS;
+        // Auto-sincronización en demanda si el campeón no tiene skins ni habilidades configuradas
+        if ($champion->skins()->count() === 0 && $champion->abilities()->count() === 0) {
+            $riotService->syncChampion($champion);
+        }
 
-        return view('champions.show', compact('champion', 'skinTiers'));
+        $champion->load(['skins', 'abilities']);
+        $skinTiers = Skin::TIERS;
+        $abilitySlots = Ability::SLOTS;
+
+        return view('champions.show', compact('champion', 'skinTiers', 'abilitySlots'));
+    }
+
+    /**
+     * Sincroniza manualmente las skins y habilidades oficiales del campeón con Riot Data Dragon.
+     */
+    public function sync(Champion $champion, RiotDataDragonService $riotService): RedirectResponse
+    {
+        $result = $riotService->syncChampion($champion);
+
+        if (! $result['success']) {
+            return redirect()
+                ->route('champions.show', $champion)
+                ->with('error', "No fue posible conectar con Riot Data Dragon para {$champion->name}.");
+        }
+
+        return redirect()
+            ->route('champions.show', $champion)
+            ->with('success', "¡Datos oficiales sincronizados! Se vincularon {$result['skins']} aspectos y {$result['abilities']} habilidades para {$champion->name}.");
     }
 
     /**

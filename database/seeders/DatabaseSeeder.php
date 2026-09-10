@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             SkinSeeder::class,
+            AbilitySeeder::class,
         ]);
     }
 }
