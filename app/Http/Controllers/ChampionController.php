@@ -75,8 +75,8 @@ class ChampionController extends Controller
      */
     public function show(Champion $champion, RiotDataDragonService $riotService): View
     {
-        // Auto-sincronización en demanda si no tiene skins o habilidades
-        if ($champion->skins()->count() === 0 || $champion->abilities()->count() === 0) {
+        // Auto-sincronización en demanda si el campeón no tiene skins ni habilidades configuradas
+        if ($champion->skins()->count() === 0 && $champion->abilities()->count() === 0) {
             $riotService->syncChampion($champion);
         }
 
