@@ -5,19 +5,12 @@
 @section('content')
 <div class="max-w-7xl mx-auto">
     <!-- Encabezado -->
-    <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6 pb-4 border-b border-[#1e282d] gap-4">
-        <div>
-            <span class="text-xs uppercase tracking-widest text-[#c89b3c] font-semibold">Grieta del Invocador</span>
-            <h1 class="text-3xl font-extrabold text-[#f0e6d2] tracking-wide mt-1">
-                Catálogo de Campeones
-            </h1>
-            <p class="text-sm text-gray-400 mt-1">Explora, filtra y consulta los detalles de los campeones registrados.</p>
-        </div>
-        <div class="flex items-center space-x-3">
-            <a href="{{ route('champions.create') }}" class="hextech-btn px-5 py-2.5 rounded font-bold text-sm tracking-wider flex items-center justify-center shadow-lg">
-                <i class="fa-solid fa-plus mr-2 text-[#c89b3c]"></i> Invocar Campeón
-            </a>
-        </div>
+    <div class="mb-6 pb-4 border-b border-[#1e282d]">
+        <span class="text-xs uppercase tracking-widest text-[#c89b3c] font-semibold">Grieta del Invocador</span>
+        <h1 class="text-3xl font-extrabold text-[#f0e6d2] tracking-wide mt-1">
+            Catálogo de Campeones
+        </h1>
+        <p class="text-sm text-gray-400 mt-1">Explora, filtra y consulta los detalles de los campeones registrados.</p>
     </div>
 
     <!-- Barra de Búsqueda y Filtros -->
